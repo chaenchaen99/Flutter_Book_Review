@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "3517983322",
+    "project_id": "book-review-a9ef2",
+    "storage_bucket": "book-review-a9ef2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:3517983322:android:b30d57d608a75c6cb08663",
+        "android_client_info": {
+          "package_name": "com.chaeyeon.flutter_book_review"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCs_NI2h7qKkpdMhNcDVoqEpuK1ojzVXcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
