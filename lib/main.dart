@@ -1,12 +1,16 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_book_review/firebase_options.dart';
 import 'package:flutter_book_review/src/app.dart';
 import 'package:flutter_book_review/src/common/interceptor/custom_interceptor.dart';
 import 'package:flutter_book_review/src/common/model/naver_book_search_option.dart';
 import 'package:flutter_book_review/src/common/repository/naver_api_repository.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   //dio 는 최초 한번만 생성
   //dio를 사용하는 이유 request, response를 보내거나 받을 때 선처리, 후처리를 interceptor라는 것을 이용하여 손쉽게 활용할 수 있다.
   Dio dio = Dio(BaseOptions(baseUrl: "https://openapi.naver.com/"));
@@ -28,25 +32,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       //공통적으로 필요한 bloc을 여기서 전부 등록함.
-      child: Builder(
-        builder: (context) => FutureBuilder(
-          future: context.read<NaverBookRepository>().searchBooks(
-                const NaverBookSearchOption.init(
-                  query: '플러터',
-                ),
-              ),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return MaterialApp(
-                home: Center(
-                  child: Text('${snapshot.data?.items?.length}'),
-                ),
-              );
-            }
-            return Container();
-          },
-        ),
-      ),
+      child: const App(),
     );
   }
 }

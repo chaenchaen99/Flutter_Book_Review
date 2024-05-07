@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_book_review/src/splash/page/splash_page.dart';
 import 'package:go_router/go_router.dart';
 
 //go_route사용시 stless위젯을 사용하면 저장할 때마다 화면이 갱신됨.
@@ -16,14 +17,10 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
     router = GoRouter(routes: [
-      // GoRoute(
-      //   path: '/',
-      //   builder: (context, state) => const HomePage(),
-      // ),
-      // GoRoute(
-      //   path: '/detail',
-      //   builder: (context, state) => const DetailPage(),
-      // ),
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const SplashPage(),
+      ),
     ], initialLocation: '/');
   }
 
