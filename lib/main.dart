@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_book_review/firebase_options.dart';
 import 'package:flutter_book_review/src/app.dart';
+import 'package:flutter_book_review/src/common/cubit/app_data_load_cubit.dart';
 import 'package:flutter_book_review/src/common/interceptor/custom_interceptor.dart';
 import 'package:flutter_book_review/src/common/model/naver_book_search_option.dart';
 import 'package:flutter_book_review/src/common/repository/naver_api_repository.dart';
+import 'package:flutter_book_review/src/splash/cubit/splash_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +34,15 @@ class MyApp extends StatelessWidget {
         ),
       ],
       //공통적으로 필요한 bloc을 여기서 전부 등록함.
-      child: const App(),
+      child: MultiBlocProvider(providers: [
+        BlocProvider(
+          create: (context) => AppDataLoadCubit(),
+          lazy: false, //등록되는 순가 바로 인스턴스 생성 => loadData() 바로 호출
+        ),
+        BlocProvider(
+          create: (context) => SplashCubit(),
+        ),
+      ], child: const App()),
     );
   }
 }

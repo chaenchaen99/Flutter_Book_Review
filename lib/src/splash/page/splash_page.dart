@@ -2,57 +2,71 @@ import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_book_review/src/common/components/app_font.dart';
+import 'package:flutter_book_review/src/common/cubit/app_data_load_cubit.dart';
+import 'package:flutter_book_review/src/common/enum/common_state_status.dart';
+import 'package:flutter_book_review/src/splash/cubit/splash_cubit.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(
-      fit: StackFit.expand,
-      children: [
-        Image.asset(
-          'assets/images/splash_bg.png',
-          fit: BoxFit.cover,
-        ),
-        Positioned(
-            bottom: MediaQuery.of(context).padding.bottom,
-            left: 0,
-            right: 0,
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AppFont(
-                  '도서 리뷰 앱으로\n좋아하는 책을 찾아보세요',
-                  textAlign: TextAlign.center,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                AppFont(
-                  '데이터 로드 중 입니다.',
-                  textAlign: TextAlign.center,
-                  fontSize: 13,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 1,
-                    color: Colors.white,
+    return BlocListener<AppDataLoadCubit, AppDataLoadState>(
+      listenWhen: (previous, current) =>
+          current.status == CommonStateStatus.loaded, //특정상태일 때만 넘겨받을 수 있도록
+      listener: (BuildContext context, AppDataLoadState state) {
+        context.read<SplashCubit>().changeLoadStatus(LoadStatus.auth_check);
+      },
+      child: Scaffold(
+          body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/images/splash_bg.png',
+            fit: BoxFit.cover,
+          ),
+          Positioned(
+              bottom: MediaQuery.of(context).padding.bottom,
+              left: 0,
+              right: 0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const AppFont(
+                    '도서 리뷰 앱으로\n좋아하는 책을 찾아보세요',
+                    textAlign: TextAlign.center,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
                   ),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-              ],
-            ))
-      ],
-    ));
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  BlocBuilder<SplashCubit, LoadStatus>(
+                      builder: (context, state) {
+                    return AppFont(
+                      '${state.message} 중 입니다.',
+                      textAlign: TextAlign.center,
+                      fontSize: 13,
+                    );
+                  }),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 1,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                ],
+              ))
+        ],
+      )),
+    );
   }
 }
