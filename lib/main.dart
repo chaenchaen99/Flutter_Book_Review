@@ -8,11 +8,17 @@ import 'package:flutter_book_review/src/common/cubit/app_data_load_cubit.dart';
 import 'package:flutter_book_review/src/common/interceptor/custom_interceptor.dart';
 import 'package:flutter_book_review/src/common/model/naver_book_search_option.dart';
 import 'package:flutter_book_review/src/common/repository/naver_api_repository.dart';
+import 'package:flutter_book_review/src/init/cubit/init_cubit.dart';
 import 'package:flutter_book_review/src/splash/cubit/splash_cubit.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getApplicationDocumentsDirectory(),
+  );
   //dio 는 최초 한번만 생성
   //dio를 사용하는 이유 request, response를 보내거나 받을 때 선처리, 후처리를 interceptor라는 것을 이용하여 손쉽게 활용할 수 있다.
   Dio dio = Dio(BaseOptions(baseUrl: "https://openapi.naver.com/"));
@@ -41,6 +47,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SplashCubit(),
+        ),
+        BlocProvider(
+          create: (context) => InitCubit(),
         ),
       ], child: const App()),
     );
