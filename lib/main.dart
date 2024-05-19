@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +9,10 @@ import 'package:flutter_book_review/src/app.dart';
 import 'package:flutter_book_review/src/common/cubit/app_data_load_cubit.dart';
 import 'package:flutter_book_review/src/common/interceptor/custom_interceptor.dart';
 import 'package:flutter_book_review/src/common/model/naver_book_search_option.dart';
+import 'package:flutter_book_review/src/common/repository/authentication_repository.dart';
 import 'package:flutter_book_review/src/common/repository/naver_api_repository.dart';
+import 'package:flutter_book_review/src/common/repository/user_repository.dart';
+import 'package:flutter_book_review/src/init/cubit/authentication_cubit.dart';
 import 'package:flutter_book_review/src/init/cubit/init_cubit.dart';
 import 'package:flutter_book_review/src/splash/cubit/splash_cubit.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -32,11 +37,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var db = FirebaseFirestore.instance;
+
     //이 앱에 사용되는 repository를 여기서 전부 등록함.
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
           create: (context) => NaverBookRepository(dio),
+        ),
+        RepositoryProvider(
+          create: (context) => AuthenticationRepository(FirebaseAuth.instance),
+        ),
+        RepositoryProvider(
+          create: (context) => UserRepository(db),
         ),
       ],
       //공통적으로 필요한 bloc을 여기서 전부 등록함.
@@ -50,6 +63,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => InitCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AuthenticationCubit(
+            context.read<AuthenticationRepository>(),
+            context.read<UserRepository>(),
+          ),
         ),
       ], child: const App()),
     );

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_book_review/src/common/components/app_font.dart';
 import 'package:flutter_book_review/src/common/cubit/app_data_load_cubit.dart';
 import 'package:flutter_book_review/src/common/enum/common_state_status.dart';
+import 'package:flutter_book_review/src/init/cubit/authentication_cubit.dart';
 import 'package:flutter_book_review/src/splash/cubit/splash_cubit.dart';
 
 class SplashPage extends StatelessWidget {
@@ -18,6 +19,7 @@ class SplashPage extends StatelessWidget {
           current.status == CommonStateStatus.loaded, //특정상태일 때만 넘겨받을 수 있도록
       listener: (BuildContext context, AppDataLoadState state) {
         context.read<SplashCubit>().changeLoadStatus(LoadStatus.auth_check);
+        context.read<AuthenticationCubit>().init();
       },
       child: Scaffold(
           body: Stack(

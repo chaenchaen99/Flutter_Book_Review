@@ -21,14 +21,14 @@ class _AppState extends State<App> {
     super.initState();
     router = GoRouter(routes: [
       GoRoute(
-        path: '/login',
+        path: '/',
         builder: (context, state) => const RootPage(),
       ),
       GoRoute(
-        path: '/',
+        path: '/login',
         builder: (context, state) => const LoginPage(),
       ),
-    ], initialLocation: '/init');
+    ], initialLocation: '/login');
   }
 
   @override

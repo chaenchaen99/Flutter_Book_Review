@@ -12,7 +12,20 @@
           "package_name": "com.chaeyeon.flutter_book_review"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "3517983322-5r9i4dmbmur84seagfc7kke79ru2rlqr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chaeyeon.flutter_book_review",
+            "certificate_hash": "8e7a3dfe0f51447c555b690c2763ed81bc23c5c3"
+          }
+        },
+        {
+          "client_id": "3517983322-kmu0p8e2hta6734297q9lah9pnspts9l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCs_NI2h7qKkpdMhNcDVoqEpuK1ojzVXcQ"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "3517983322-kmu0p8e2hta6734297q9lah9pnspts9l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "3517983322-0jqv432ft018v2h56d2j2mta9evp5uc1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterBookReview.RunnerTests"
+              }
+            }
+          ]
         }
       }
     }
