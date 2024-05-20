@@ -8,19 +8,39 @@ import 'package:flutter_book_review/src/common/cubit/app_data_load_cubit.dart';
 import 'package:flutter_book_review/src/common/enum/common_state_status.dart';
 import 'package:flutter_book_review/src/init/cubit/authentication_cubit.dart';
 import 'package:flutter_book_review/src/splash/cubit/splash_cubit.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AppDataLoadCubit, AppDataLoadState>(
-      listenWhen: (previous, current) =>
-          current.status == CommonStateStatus.loaded, //특정상태일 때만 넘겨받을 수 있도록
-      listener: (BuildContext context, AppDataLoadState state) {
-        context.read<SplashCubit>().changeLoadStatus(LoadStatus.auth_check);
-        context.read<AuthenticationCubit>().init();
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AppDataLoadCubit, AppDataLoadState>(
+          listenWhen: (previous, current) =>
+              current.status == CommonStateStatus.loaded, //특정상태일 때만 넘겨받을 수 있도록
+          listener: (BuildContext context, AppDataLoadState state) {
+            context.read<SplashCubit>().changeLoadStatus(LoadStatus.auth_check);
+            context.read<AuthenticationCubit>().init();
+          },
+        ),
+        BlocListener<AuthenticationCubit, AuthenticationState>(
+          listener: (context, state) {
+            switch (state.status) {
+              case AuthenticationStatus.authentication:
+                break;
+              case AuthenticationStatus.unAuthenticated:
+                break;
+              case AuthenticationStatus.unknown:
+                context.go('login');
+                break;
+              case AuthenticationStatus.error:
+                break;
+            }
+          },
+        ),
+      ],
       child: Scaffold(
           body: Stack(
         fit: StackFit.expand,

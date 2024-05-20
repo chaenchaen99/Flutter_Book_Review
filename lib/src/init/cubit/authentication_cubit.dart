@@ -11,6 +11,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       : super(const AuthenticationState());
 
   void init() {
+    _authenticationRepository.logout();
     _authenticationRepository.user.listen((user) {
       _userStateChangedEvent(user);
     });
