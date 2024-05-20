@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_book_review/src/init/cubit/authentication_cubit.dart';
 import 'package:flutter_book_review/src/init/page/init_page.dart';
 import 'package:flutter_book_review/src/login/page/login_page.dart';
 import 'package:flutter_book_review/src/root/page/root_page.dart';
+import 'package:flutter_book_review/src/signup/page/signup_page.dart';
 import 'package:flutter_book_review/src/splash/page/splash_page.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,16 +22,40 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    router = GoRouter(routes: [
-      GoRoute(
-        path: '/',
-        builder: (context, state) => const RootPage(),
-      ),
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => const LoginPage(),
-      ),
-    ], initialLocation: '/login');
+    router = GoRouter(
+      initialLocation: '/',
+      refreshListenable: context.read<AuthenticationCubit>(),
+      redirect: (context, state) {
+        var authStatus = context.read<AuthenticationCubit>().state.status;
+        switch (authStatus) {
+          case AuthenticationStatus.authentication:
+            break;
+          case AuthenticationStatus.unAuthenticated:
+            return '/signup';
+          case AuthenticationStatus.unknown:
+            return '/login';
+          case AuthenticationStatus.init:
+            break;
+          case AuthenticationStatus.error:
+            break;
+        }
+        return state.path;
+      },
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => const RootPage(),
+        ),
+        GoRoute(
+          path: '/login',
+          builder: (context, state) => const LoginPage(),
+        ),
+        GoRoute(
+          path: '/signup',
+          builder: (context, state) => const SignUpPage(),
+        ),
+      ],
+    );
   }
 
   @override

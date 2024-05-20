@@ -15,32 +15,13 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<AppDataLoadCubit, AppDataLoadState>(
-          listenWhen: (previous, current) =>
-              current.status == CommonStateStatus.loaded, //특정상태일 때만 넘겨받을 수 있도록
-          listener: (BuildContext context, AppDataLoadState state) {
-            context.read<SplashCubit>().changeLoadStatus(LoadStatus.auth_check);
-            context.read<AuthenticationCubit>().init();
-          },
-        ),
-        BlocListener<AuthenticationCubit, AuthenticationState>(
-          listener: (context, state) {
-            switch (state.status) {
-              case AuthenticationStatus.authentication:
-                break;
-              case AuthenticationStatus.unAuthenticated:
-                break;
-              case AuthenticationStatus.unknown:
-                context.go('login');
-                break;
-              case AuthenticationStatus.error:
-                break;
-            }
-          },
-        ),
-      ],
+    return BlocListener<AppDataLoadCubit, AppDataLoadState>(
+      listenWhen: (previous, current) =>
+          current.status == CommonStateStatus.loaded, //특정상태일 때만 넘겨받을 수 있도록
+      listener: (BuildContext context, AppDataLoadState state) {
+        context.read<SplashCubit>().changeLoadStatus(LoadStatus.auth_check);
+        context.read<AuthenticationCubit>().init();
+      },
       child: Scaffold(
           body: Stack(
         fit: StackFit.expand,

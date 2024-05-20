@@ -1,10 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_book_review/src/common/model/user_model.dart';
 import 'package:flutter_book_review/src/common/repository/authentication_repository.dart';
 import 'package:flutter_book_review/src/common/repository/user_repository.dart';
 
-class AuthenticationCubit extends Cubit<AuthenticationState> {
+class AuthenticationCubit extends Cubit<AuthenticationState>
+    with ChangeNotifier {
   final AuthenticationRepository _authenticationRepository;
   final UserRepository _userRepository;
   AuthenticationCubit(this._authenticationRepository, this._userRepository)
@@ -29,6 +31,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
             user: result, status: AuthenticationStatus.authentication));
       }
     }
+
+    notifyListeners();
   }
 
   void googleLogin() async {
@@ -50,6 +54,7 @@ enum AuthenticationStatus {
   authentication,
   unAuthenticated,
   unknown,
+  init,
   error,
 }
 
@@ -57,7 +62,7 @@ class AuthenticationState extends Equatable {
   final AuthenticationStatus status;
   final UserModel? user;
   const AuthenticationState(
-      {this.status = AuthenticationStatus.unknown, this.user});
+      {this.status = AuthenticationStatus.init, this.user});
 
   AuthenticationState copyWith({
     AuthenticationStatus? status,
