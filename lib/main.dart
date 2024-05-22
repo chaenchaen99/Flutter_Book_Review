@@ -8,7 +8,6 @@ import 'package:flutter_book_review/firebase_options.dart';
 import 'package:flutter_book_review/src/app.dart';
 import 'package:flutter_book_review/src/common/cubit/app_data_load_cubit.dart';
 import 'package:flutter_book_review/src/common/interceptor/custom_interceptor.dart';
-import 'package:flutter_book_review/src/common/model/naver_book_search_option.dart';
 import 'package:flutter_book_review/src/common/repository/authentication_repository.dart';
 import 'package:flutter_book_review/src/common/repository/naver_api_repository.dart';
 import 'package:flutter_book_review/src/common/repository/user_repository.dart';

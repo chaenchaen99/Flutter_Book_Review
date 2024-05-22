@@ -1,7 +1,4 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_book_review/src/common/components/app_font.dart';
 import 'package:flutter_book_review/src/common/cubit/app_data_load_cubit.dart';

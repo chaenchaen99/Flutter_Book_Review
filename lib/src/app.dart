@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_book_review/src/init/cubit/authentication_cubit.dart';
-import 'package:flutter_book_review/src/init/page/init_page.dart';
 import 'package:flutter_book_review/src/login/page/login_page.dart';
 import 'package:flutter_book_review/src/root/page/root_page.dart';
 import 'package:flutter_book_review/src/signup/page/signup_page.dart';
-import 'package:flutter_book_review/src/splash/page/splash_page.dart';
 import 'package:go_router/go_router.dart';
 
 //go_route사용시 stless위젯을 사용하면 저장할 때마다 화면이 갱신됨.
@@ -52,7 +50,7 @@ class _AppState extends State<App> {
         ),
         GoRoute(
           path: '/signup',
-          builder: (context, state) => const SignUpPage(),
+          builder: (context, state) => const SignupPage(),
         ),
       ],
     );
