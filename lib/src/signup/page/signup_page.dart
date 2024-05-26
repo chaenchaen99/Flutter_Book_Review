@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_book_review/src/common/components/app_font.dart';
 import 'package:flutter_book_review/src/common/components/btn.dart';
+import 'package:flutter_book_review/src/signup/cubit/signup_cubit.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignupPage extends StatelessWidget {
   const SignupPage({super.key});
@@ -18,14 +23,14 @@ class SignupPage extends StatelessWidget {
           ),
         )
       ]),
-      body: const Padding(
-        padding: EdgeInsets.all(20),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
         child: Column(children: [
           _UserProfileImageField(),
-          SizedBox(height: 50),
-          _NicknameField(),
-          SizedBox(height: 30),
-          _DiscriptionField(),
+          const SizedBox(height: 50),
+          const _NicknameField(),
+          const SizedBox(height: 30),
+          const _DiscriptionField(),
         ]),
       ),
       bottomNavigationBar: Padding(
@@ -59,15 +64,27 @@ class SignupPage extends StatelessWidget {
 }
 
 class _UserProfileImageField extends StatelessWidget {
-  const _UserProfileImageField({super.key});
+  _UserProfileImageField({super.key});
+  final ImagePicker _picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
+    var profileFile =
+        context.select<SignupCubit, File?>((cubit) => cubit.state.profileFile);
+
     return Center(
-      child: CircleAvatar(
-        backgroundColor: Colors.grey,
-        radius: 50,
-        backgroundImage: Image.asset('assets/images/default_avatar.png').image,
+      child: GestureDetector(
+        onTap: () async {
+          var image = await _picker.pickImage(source: ImageSource.gallery);
+          context.read<SignupCubit>().changeProfileImage(image);
+        },
+        child: CircleAvatar(
+          backgroundColor: Colors.grey,
+          radius: 50,
+          backgroundImage: profileFile == null
+              ? Image.asset('assets/images/default_avatar.png').image
+              : Image.file(profileFile).image,
+        ),
       ),
     );
   }
