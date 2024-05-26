@@ -10,7 +10,7 @@ class AppDataLoadCubit extends Cubit<AppDataLoadState> {
   void _loadData() async {
     emit(state.copyWith(status: CommonStateStatus.loading));
     await Future.delayed(const Duration(milliseconds: 1000));
-    emit(state.copyWith(status: CommonStateStatus.loading));
+    emit(state.copyWith(status: CommonStateStatus.loaded));
   }
 }
 

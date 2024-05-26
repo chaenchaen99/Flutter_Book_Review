@@ -44,7 +44,9 @@ class SignupPage extends StatelessWidget {
           children: [
             Expanded(
               child: Btn(
-                onTap: () {},
+                onTap: () {
+                  context.read<SignupCubit>().save;
+                },
                 text: '가입',
               ),
             ),
@@ -105,7 +107,7 @@ class _NicknameField extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         TextField(
-          onChanged: null,
+          onChanged: context.read<SignupCubit>().changeNickName,
           textAlign: TextAlign.center,
           style: const TextStyle(color: Colors.white, fontSize: 18),
           decoration: InputDecoration(
@@ -143,7 +145,7 @@ class _DiscriptionField extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         TextField(
-          onChanged: null,
+          onChanged: context.read<SignupCubit>().changeDescription,
           textAlign: TextAlign.center,
           style: const TextStyle(color: Colors.white, fontSize: 12),
           maxLength: 50,

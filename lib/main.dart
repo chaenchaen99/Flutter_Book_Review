@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_book_review/firebase_options.dart';
 import 'package:flutter_book_review/src/app.dart';
 import 'package:flutter_book_review/src/common/cubit/app_data_load_cubit.dart';
+import 'package:flutter_book_review/src/common/cubit/upload_cubit.dart';
 import 'package:flutter_book_review/src/common/interceptor/custom_interceptor.dart';
 import 'package:flutter_book_review/src/common/repository/authentication_repository.dart';
 import 'package:flutter_book_review/src/common/repository/naver_api_repository.dart';
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var db = FirebaseFirestore.instance;
+    var storage = FirebaseStorage.instance;
 
     //이 앱에 사용되는 repository를 여기서 전부 등록함.
     return MultiRepositoryProvider(
@@ -59,6 +62,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SplashCubit(),
+        ),
+        BlocProvider(
+          create: (context) => UploadCubit(storage),
         ),
         BlocProvider(
           create: (context) => InitCubit(),
