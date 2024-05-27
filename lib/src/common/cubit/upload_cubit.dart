@@ -52,7 +52,7 @@ class UploadState extends Equatable {
   const UploadState({
     this.status = UploadStatus.init,
     this.url,
-    this.percent,
+    this.percent = 0,
   });
 
   UploadState copyWith({

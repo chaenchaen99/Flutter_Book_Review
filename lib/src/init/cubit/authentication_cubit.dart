@@ -25,7 +25,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState>
     } else {
       var result = await _userRepository.findUserOne(user.uid!);
       if (result == null) {
-        emit(state.copyWith(status: AuthenticationStatus.unAuthenticated));
+        emit(state.copyWith(
+            user: user, status: AuthenticationStatus.unAuthenticated));
       } else {
         emit(state.copyWith(
             user: result, status: AuthenticationStatus.authentication));
