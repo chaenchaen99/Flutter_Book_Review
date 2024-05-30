@@ -3,10 +3,15 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_book_review/src/common/model/user_model.dart';
+import 'package:flutter_book_review/src/common/repository/user_repository.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignupCubit extends Cubit<SignupState> {
-  SignupCubit(UserModel userModel) : super(SignupState(userModel: userModel));
+  final UserRepository _userRepository;
+  SignupCubit(
+    UserModel userModel,
+    this._userRepository,
+  ) : super(SignupState(userModel: userModel));
 
   void changeProfileImage(XFile? image) {
     if (image == null) return;
@@ -33,6 +38,7 @@ class SignupCubit extends Cubit<SignupState> {
         userModel: state.userModel!.copyWith(profile: url),
       ),
     );
+    submit();
   }
 
   void save() {
@@ -40,7 +46,22 @@ class SignupCubit extends Cubit<SignupState> {
     emit(state.copyWith(status: SignupStatus.loading));
     if (state.profileFile != null) {
       emit(state.copyWith(status: SignupStatus.uploading));
-    } else {}
+    } else {
+      submit();
+    }
+  }
+
+  void submit() async {
+    var joinUserModel = state.userModel!.copyWith(
+      name: state.nickname,
+      description: state.description,
+    );
+    var result = await _userRepository.joinUser(joinUserModel);
+    if (result) {
+      emit(state.copyWith(status: SignupStatus.success));
+    } else {
+      emit(state.copyWith(status: SignupStatus.fail));
+    }
   }
 }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_book_review/src/common/repository/user_repository.dart';
 import 'package:flutter_book_review/src/init/cubit/authentication_cubit.dart';
 import 'package:flutter_book_review/src/login/page/login_page.dart';
 import 'package:flutter_book_review/src/root/page/root_page.dart';
@@ -52,8 +53,10 @@ class _AppState extends State<App> {
         GoRoute(
           path: '/signup',
           builder: (context, state) => BlocProvider(
-            create: (context) =>
-                SignupCubit(context.read<AuthenticationCubit>().state.user!),
+            create: (context) => SignupCubit(
+              context.read<AuthenticationCubit>().state.user!,
+              context.read<UserRepository>(),
+            ),
             child: const SignupPage(),
           ),
         ),
