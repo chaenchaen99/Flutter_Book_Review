@@ -6,8 +6,10 @@ import 'package:flutter_book_review/src/common/components/app_font.dart';
 import 'package:flutter_book_review/src/common/components/btn.dart';
 import 'package:flutter_book_review/src/common/components/loading.dart';
 import 'package:flutter_book_review/src/common/cubit/upload_cubit.dart';
+import 'package:flutter_book_review/src/init/cubit/authentication_cubit.dart';
 import 'package:flutter_book_review/src/signup/cubit/signup_cubit.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignupPage extends StatelessWidget {
@@ -83,6 +85,7 @@ class SignupPage extends StatelessWidget {
                       state.profileFile!, state.userModel!.uid!);
                   break;
                 case SignupStatus.success:
+                  context.read<AuthenticationCubit>().reloadAuth();
                   break;
                 case SignupStatus.fail:
                   break;

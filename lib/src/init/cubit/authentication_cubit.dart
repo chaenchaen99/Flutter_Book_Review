@@ -36,6 +36,10 @@ class AuthenticationCubit extends Cubit<AuthenticationState>
     notifyListeners();
   }
 
+  void reloadAuth() {
+    _userStateChangedEvent(state.user);
+  }
+
   void googleLogin() async {
     await _authenticationRepository.signInWithGoogle();
   }
