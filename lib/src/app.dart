@@ -29,9 +29,14 @@ class _AppState extends State<App> {
       refreshListenable: context.read<AuthenticationCubit>(),
       redirect: (context, state) {
         var authStatus = context.read<AuthenticationCubit>().state.status;
+        var blockPageInAuthenticationState = ['/', '/login', '/signup'];
+        print('현재상태:$authStatus');
+        print('현재패스:${state.matchedLocation}');
         switch (authStatus) {
           case AuthenticationStatus.authentication:
-            return '/home';
+            return blockPageInAuthenticationState.contains(state.fullPath)
+                ? '/home'
+                : state.matchedLocation;
           case AuthenticationStatus.unAuthenticated:
             return '/signup';
           case AuthenticationStatus.unknown:

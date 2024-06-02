@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           centerTitle: false,
-          leading: Container(
+          title: Container(
             padding: const EdgeInsets.all(10.0),
             child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
                 builder: (context, state) {
@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
                         : Image.network(state.user!.profile!).image,
                   ),
                   const SizedBox(
-                    width: 13,
+                    width: 15,
                   ),
                   AppFont(
                     state.user?.name ?? '',

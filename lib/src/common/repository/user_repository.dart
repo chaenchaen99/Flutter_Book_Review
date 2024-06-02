@@ -7,10 +7,7 @@ class UserRepository {
 
   Future<UserModel?> findUserOne(String uid) async {
     try {
-      var doc = await db
-          .collection('collectionPath')
-          .where('uid', isEqualTo: uid)
-          .get();
+      var doc = await db.collection('users').where('uid', isEqualTo: uid).get();
 
       if (doc.docs.isEmpty) {
         return null;

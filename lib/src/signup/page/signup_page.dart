@@ -85,6 +85,7 @@ class SignupPage extends StatelessWidget {
                       state.profileFile!, state.userModel!.uid!);
                   break;
                 case SignupStatus.success:
+                  print('회원가입 성공');
                   context.read<AuthenticationCubit>().reloadAuth();
                   break;
                 case SignupStatus.fail:
@@ -96,9 +97,9 @@ class SignupPage extends StatelessWidget {
             case UploadStatus.init:
               break;
             case UploadStatus.uploading:
-              context
-                  .read<SignupCubit>()
-                  .uploadPercent(state.percent!.toStringAsFixed(2));
+              context.read<SignupCubit>().uploadPercent(
+                  state.percent?.toStringAsFixed(2) ??
+                      (0.0).toStringAsFixed(2));
               break;
             case UploadStatus.success:
               context.read<SignupCubit>().updateProfileImageUrl(state.url!);
