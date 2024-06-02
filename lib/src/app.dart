@@ -5,6 +5,7 @@ import 'package:flutter_book_review/src/home/page/home_page.dart';
 import 'package:flutter_book_review/src/init/cubit/authentication_cubit.dart';
 import 'package:flutter_book_review/src/login/page/login_page.dart';
 import 'package:flutter_book_review/src/root/page/root_page.dart';
+import 'package:flutter_book_review/src/search/page/search_page.dart';
 import 'package:flutter_book_review/src/signup/cubit/signup_cubit.dart';
 import 'package:flutter_book_review/src/signup/page/signup_page.dart';
 import 'package:go_router/go_router.dart';
@@ -31,7 +32,6 @@ class _AppState extends State<App> {
         switch (authStatus) {
           case AuthenticationStatus.authentication:
             return '/home';
-            break;
           case AuthenticationStatus.unAuthenticated:
             return '/signup';
           case AuthenticationStatus.unknown:
@@ -55,6 +55,10 @@ class _AppState extends State<App> {
         GoRoute(
           path: '/home',
           builder: (context, state) => const HomePage(),
+        ),
+        GoRoute(
+          path: '/search',
+          builder: (context, state) => const SearchPage(),
         ),
         GoRoute(
           path: '/signup',
