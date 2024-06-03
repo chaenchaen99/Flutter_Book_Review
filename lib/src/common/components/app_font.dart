@@ -3,10 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppFont extends StatelessWidget {
   final String text;
-  final double fontSize;
-  final FontWeight fontWeight;
+  final double? fontSize;
+  final FontWeight? fontWeight;
   final Color? color;
   final TextAlign? textAlign;
+  final double? lineHeight;
+  final int? maxLine;
+  final TextOverflow? overflow;
 
   const AppFont(
     this.text, {
@@ -15,6 +18,9 @@ class AppFont extends StatelessWidget {
     this.color = Colors.white,
     this.fontWeight = FontWeight.normal,
     this.fontSize = 15,
+    this.maxLine,
+    this.lineHeight,
+    this.overflow,
   });
 
   @override
@@ -22,10 +28,13 @@ class AppFont extends StatelessWidget {
     return Text(
       text,
       textAlign: textAlign,
+      maxLines: maxLine,
+      overflow: overflow,
       style: GoogleFonts.notoSans(
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,
+        height: lineHeight,
       ),
     );
   }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_book_review/src/common/repository/naver_api_repository.dart';
 import 'package:flutter_book_review/src/common/repository/user_repository.dart';
 import 'package:flutter_book_review/src/home/page/home_page.dart';
 import 'package:flutter_book_review/src/init/cubit/authentication_cubit.dart';
 import 'package:flutter_book_review/src/login/page/login_page.dart';
 import 'package:flutter_book_review/src/root/page/root_page.dart';
+import 'package:flutter_book_review/src/search/cubit/search_book_cubit.dart';
 import 'package:flutter_book_review/src/search/page/search_page.dart';
 import 'package:flutter_book_review/src/signup/cubit/signup_cubit.dart';
 import 'package:flutter_book_review/src/signup/page/signup_page.dart';
@@ -62,9 +64,12 @@ class _AppState extends State<App> {
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
-          path: '/search',
-          builder: (context, state) => const SearchPage(),
-        ),
+            path: '/search',
+            builder: (context, state) => BlocProvider(
+                  create: (context) =>
+                      SearchBookCubit(context.read<NaverBookRepository>()),
+                  child: const SearchPage(),
+                )),
         GoRoute(
           path: '/signup',
           builder: (context, state) => BlocProvider(
