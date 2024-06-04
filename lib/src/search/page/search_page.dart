@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_book_review/src/common/components/app_font.dart';
 import 'package:flutter_book_review/src/common/components/input_widget.dart';
@@ -56,14 +57,19 @@ class _SearchResultView extends StatefulWidget {
 }
 
 class _SearchResultViewState extends State<_SearchResultView> {
+  ScrollController controller = ScrollController();
   late SearchBookCubit cubit;
 
   @override
   void initState() {
     super.initState();
+    controller.addListener(() {
+      if (controller.offset > controller.position.maxScrollExtent - 100 &&
+          cubit.state.status == CommonStateStatus.loaded) {
+        cubit.nextPage();
+      }
+    });
   }
-
-  ScrollController controller = ScrollController();
 
   // @override
   Widget _messageView(String message) {
@@ -79,6 +85,7 @@ class _SearchResultViewState extends State<_SearchResultView> {
 
   Widget result() {
     return ListView.separated(
+      controller: controller,
       itemBuilder: (context, index) {
         NaverBookInfo bookInfo = cubit.state.result!.items![index];
         return GestureDetector(
