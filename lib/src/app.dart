@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_book_review/src/common/model/naver_book_info.dart';
 import 'package:flutter_book_review/src/common/repository/naver_api_repository.dart';
 import 'package:flutter_book_review/src/common/repository/user_repository.dart';
 import 'package:flutter_book_review/src/home/page/home_page.dart';
@@ -11,6 +12,8 @@ import 'package:flutter_book_review/src/search/page/search_page.dart';
 import 'package:flutter_book_review/src/signup/cubit/signup_cubit.dart';
 import 'package:flutter_book_review/src/signup/page/signup_page.dart';
 import 'package:go_router/go_router.dart';
+
+import 'book_Info/page/book_info_page.dart';
 
 //go_route사용시 stless위젯을 사용하면 저장할 때마다 화면이 갱신됨.
 //따라서 route는 한번만 세팅이 되게 하기 위해서 stateful의 라이프사이클을 이용하여 사용.
@@ -62,6 +65,11 @@ class _AppState extends State<App> {
         GoRoute(
           path: '/home',
           builder: (context, state) => const HomePage(),
+        ),
+        GoRoute(
+          path: '/info',
+          builder: (context, state) =>
+              BookInfoPage(state.extra as NaverBookInfo),
         ),
         GoRoute(
             path: '/search',

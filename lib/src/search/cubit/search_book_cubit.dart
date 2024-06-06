@@ -12,15 +12,15 @@ class SearchBookCubit extends Cubit<SearchBookState> {
   void search(String searchKey) async {
     emit(state.copyWith(
         status: CommonStateStatus.loading,
+        result: const NaverBookInfoResults.init(),
         searchOption: state.searchOption!.copyWith(
           query: searchKey,
         )));
-    var searchOption = NaverBookSearchOption(
-      query: searchKey,
-      display: 10,
-      start: 1,
-      sort: NaverBookSearchType.date,
-    );
+
+    _searchToNaverApi();
+  }
+
+  void _searchToNaverApi() async {
     var result = await _naverBookRepository.searchBooks(state.searchOption!);
     if (result.start! > result.total! || result.items!.isEmpty) {
       emit(state.copyWith(status: CommonStateStatus.complete));
@@ -40,7 +40,7 @@ class SearchBookCubit extends Cubit<SearchBookState> {
         ),
       ),
     );
-    search(state.searchOption!.query ?? '');
+    _searchToNaverApi();
   }
 }
 

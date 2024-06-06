@@ -90,7 +90,7 @@ class _SearchResultViewState extends State<_SearchResultView> {
         NaverBookInfo bookInfo = cubit.state.result!.items![index];
         return GestureDetector(
           onTap: () {
-            //  context.push('/info', extra: bookInfo);
+            context.push('/info', extra: bookInfo);
           },
           behavior: HitTestBehavior.translucent,
           child: Row(
