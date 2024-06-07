@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_book_review/src/common/components/app_divider.dart';
 import 'package:flutter_book_review/src/common/components/app_font.dart';
 import 'package:flutter_book_review/src/common/components/btn.dart';
 import 'package:flutter_book_review/src/common/components/review_slider_bar.dart';
 import 'package:flutter_book_review/src/common/model/naver_book_info.dart';
+import 'package:flutter_book_review/src/reivew/cubit/review_cubit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
@@ -40,7 +42,7 @@ class ReviewPage extends StatelessWidget {
             top: 20,
             bottom: 20 + MediaQuery.of(context).padding.bottom),
         child: Btn(
-          onTap: () {},
+          onTap: context.read<ReviewCubit>().save,
           text: '저장',
         ),
       ),
@@ -63,7 +65,7 @@ class _ReviewBox extends StatelessWidget {
           color: Color(0xff585858),
         ),
       ),
-      onChanged: (value) {},
+      onChanged: context.read<ReviewCubit>().changeReview,
       style: const TextStyle(color: Colors.white),
     );
   }
@@ -116,9 +118,9 @@ class _HeaderBookInfo extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                ReviewSliderBar(onChange: (double value) {
-                  print(value);
-                })
+                ReviewSliderBar(
+                  onChange: context.read<ReviewCubit>().changeValue,
+                )
               ],
             ),
           ),

@@ -6,6 +6,7 @@ import 'package:flutter_book_review/src/common/repository/user_repository.dart';
 import 'package:flutter_book_review/src/home/page/home_page.dart';
 import 'package:flutter_book_review/src/init/cubit/authentication_cubit.dart';
 import 'package:flutter_book_review/src/login/page/login_page.dart';
+import 'package:flutter_book_review/src/reivew/cubit/review_cubit.dart';
 import 'package:flutter_book_review/src/reivew/page/review_page.dart';
 import 'package:flutter_book_review/src/root/page/root_page.dart';
 import 'package:flutter_book_review/src/search/cubit/search_book_cubit.dart';
@@ -74,7 +75,13 @@ class _AppState extends State<App> {
         ),
         GoRoute(
           path: '/review',
-          builder: (context, state) => ReviewPage(state.extra as NaverBookInfo),
+          builder: (context, state) => BlocProvider(
+              create: (context) {
+                var bookInfo = state.extra as NaverBookInfo;
+                var uid = context.read<AuthenticationCubit>().state.user!.uid!;
+                return ReviewCubit(uid, bookInfo);
+              },
+              child: ReviewPage(state.extra as NaverBookInfo)),
         ),
         GoRoute(
             path: '/search',
