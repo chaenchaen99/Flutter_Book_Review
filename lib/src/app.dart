@@ -6,6 +6,7 @@ import 'package:flutter_book_review/src/common/repository/user_repository.dart';
 import 'package:flutter_book_review/src/home/page/home_page.dart';
 import 'package:flutter_book_review/src/init/cubit/authentication_cubit.dart';
 import 'package:flutter_book_review/src/login/page/login_page.dart';
+import 'package:flutter_book_review/src/reivew/page/review_page.dart';
 import 'package:flutter_book_review/src/root/page/root_page.dart';
 import 'package:flutter_book_review/src/search/cubit/search_book_cubit.dart';
 import 'package:flutter_book_review/src/search/page/search_page.dart';
@@ -70,6 +71,10 @@ class _AppState extends State<App> {
           path: '/info',
           builder: (context, state) =>
               BookInfoPage(state.extra as NaverBookInfo),
+        ),
+        GoRoute(
+          path: '/review',
+          builder: (context, state) => ReviewPage(state.extra as NaverBookInfo),
         ),
         GoRoute(
             path: '/search',
