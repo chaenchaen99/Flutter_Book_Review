@@ -9,7 +9,7 @@ class Review extends Equatable {
   final String? bookId;
   final String? review;
   final double? value;
-  final String? reviewerId;
+  final String? reviewerUId;
   final NaverBookInfo? naverBookInfo;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -18,7 +18,7 @@ class Review extends Equatable {
     this.bookId,
     this.review,
     this.value,
-    this.reviewerId,
+    this.reviewerUId,
     this.naverBookInfo,
     this.createdAt,
     this.updatedAt,
@@ -31,7 +31,7 @@ class Review extends Equatable {
     String? bookId,
     String? review,
     double? value,
-    String? reviewerId,
+    String? reviewerUId,
     NaverBookInfo? naverBookInfo,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -40,7 +40,7 @@ class Review extends Equatable {
       bookId: bookId ?? this.bookId,
       review: review ?? this.review,
       value: value ?? this.value,
-      reviewerId: reviewerId ?? this.reviewerId,
+      reviewerUId: reviewerUId ?? this.reviewerUId,
       naverBookInfo: naverBookInfo ?? this.naverBookInfo,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -52,7 +52,7 @@ class Review extends Equatable {
         bookId,
         review,
         value,
-        reviewerId,
+        reviewerUId,
         naverBookInfo,
         createdAt,
         updatedAt,

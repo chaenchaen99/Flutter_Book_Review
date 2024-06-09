@@ -11,7 +11,9 @@ import 'package:flutter_book_review/src/common/cubit/app_data_load_cubit.dart';
 import 'package:flutter_book_review/src/common/cubit/upload_cubit.dart';
 import 'package:flutter_book_review/src/common/interceptor/custom_interceptor.dart';
 import 'package:flutter_book_review/src/common/repository/authentication_repository.dart';
+import 'package:flutter_book_review/src/common/repository/book_review_info_repository.dart';
 import 'package:flutter_book_review/src/common/repository/naver_api_repository.dart';
+import 'package:flutter_book_review/src/common/repository/review_repository.dart';
 import 'package:flutter_book_review/src/common/repository/user_repository.dart';
 import 'package:flutter_book_review/src/init/cubit/authentication_cubit.dart';
 import 'package:flutter_book_review/src/init/cubit/init_cubit.dart';
@@ -52,6 +54,12 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (context) => UserRepository(db),
+        ),
+        RepositoryProvider(
+          create: (context) => BookReviewInfoRepository(db),
+        ),
+        RepositoryProvider(
+          create: (context) => ReviewRepository(db),
         ),
       ],
       //공통적으로 필요한 bloc을 여기서 전부 등록함.
