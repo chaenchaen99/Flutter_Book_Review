@@ -32,7 +32,15 @@ class ReviewPage extends StatelessWidget {
         children: [
           _HeaderBookInfo(naverBookInfo),
           const AppDivider(),
-          const Expanded(child: _ReviewBox()),
+          Expanded(
+              child: BlocBuilder<ReviewCubit, ReviewState>(
+                  buildWhen: (previous, current) =>
+                      current.isEditMode != previous.isEditMode,
+                  builder: (context, state) {
+                    return _ReviewBox(
+                      initReview: state.reviewInfo?.review,
+                    );
+                  })),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -50,13 +58,28 @@ class ReviewPage extends StatelessWidget {
   }
 }
 
-class _ReviewBox extends StatelessWidget {
-  const _ReviewBox({super.key});
+class _ReviewBox extends StatefulWidget {
+  final String? initReview;
+  const _ReviewBox({super.key, this.initReview});
+
+  @override
+  State<_ReviewBox> createState() => _ReviewBoxState();
+}
+
+class _ReviewBoxState extends State<_ReviewBox> {
+  TextEditingController editingController = TextEditingController();
+
+  @override
+  void didUpdateWidget(covariant _ReviewBox oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    editingController.text = widget.initReview ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       maxLines: null,
+      controller: editingController,
       decoration: const InputDecoration(
         border: InputBorder.none,
         hintText: "리뷰를 입력하세요",
@@ -118,9 +141,13 @@ class _HeaderBookInfo extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                ReviewSliderBar(
-                  onChange: context.read<ReviewCubit>().changeValue,
-                )
+                BlocBuilder<ReviewCubit, ReviewState>(
+                    builder: ((context, state) {
+                  return ReviewSliderBar(
+                    initValue: state.reviewInfo?.value ?? 0,
+                    onChange: context.read<ReviewCubit>().changeValue,
+                  );
+                })),
               ],
             ),
           ),
