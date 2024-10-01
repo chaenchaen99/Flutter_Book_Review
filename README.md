@@ -1,10 +1,9 @@
 
 # Flutter_Book_Review [Clone]
 
-### [앱 미리보기]
-<img src="https://github.com/chaenchaen99/Flutter_Book_Review/assets/155143655/823ac53c-be9c-4079-a93a-1fe611cc2070" width="300" />
-<img src="https://github.com/chaenchaen99/Flutter_Book_Review/assets/155143655/b4ee68bd-2278-452d-bf94-c39fe26a472e" width="300" />
-<img src="https://github.com/chaenchaen99/Flutter_Book_Review/assets/155143655/261651a5-6716-43c6-8ef7-f65a705ec325" width="300" />
+<img src="https://github.com/chaenchaen99/Flutter_Book_Review/assets/155143655/823ac53c-be9c-4079-a93a-1fe611cc2070" width="30%" />
+<img src="https://github.com/chaenchaen99/Flutter_Book_Review/assets/155143655/b4ee68bd-2278-452d-bf94-c39fe26a472e" width="30%" />
+<img src="https://github.com/chaenchaen99/Flutter_Book_Review/assets/155143655/261651a5-6716-43c6-8ef7-f65a705ec325" width="30%" />
 
 
 ### [요구사항]
